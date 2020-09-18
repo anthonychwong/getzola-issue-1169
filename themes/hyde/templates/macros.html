@@ -1,0 +1,9 @@
+{% macro note_header(item) -%}
+<h1 class="post-title">{{ item.title }}</h1>
+<span class="post-date">{{ item.date | date(format="%Y-%m-%d") }}</span>
+{% if item.taxonomies is containing("note_tags") -%}
+<span class="post-tags">{% for tag in item.taxonomies["note_tags"] -%}
+  <a href="{{ get_taxonomy_url(kind="note_tags", name=tag, lang=item.lang) }}"><code>{{ tag }}</code></a>
+{%- endfor -%}</span>
+{%- endif %}
+{%- endmacro note_header %}
