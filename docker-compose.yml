@@ -1,0 +1,9 @@
+version: "3.8"
+services:
+  zola:
+    image: balthek/zola:0.12.0
+    command: --root /site serve --interface 0.0.0.0
+    volumes:
+      - .:/site
+    ports: 
+      - 1111:1111
