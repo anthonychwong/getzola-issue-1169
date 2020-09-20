@@ -1,9 +1,23 @@
-{% macro note_header(item) -%}
+{% macro note_header(item, item_link=false) -%}
+{% if item_link -%}
+<h1 class="post-title"><a href="{{ item.permalink }}">{{ item.title }}</a></h1>
+{%- else -%}
 <h1 class="post-title">{{ item.title }}</h1>
+{%- endif %}
 <span class="post-date">{{ item.date | date(format="%Y-%m-%d") }}</span>
 {% if item.taxonomies is containing("note_tags") -%}
 <span class="post-tags">{% for tag in item.taxonomies["note_tags"] -%}
-  <a href="{{ get_taxonomy_url(kind="note_tags", name=tag, lang=item.lang) }}"><code>{{ tag }}</code></a>
+  <a href="{{ get_taxonomy_url(kind="note_tags", name=tag, lang=item.lang) }}"><code>{{ tag }}</code></a>&nbsp;
 {%- endfor -%}</span>
 {%- endif %}
 {%- endmacro note_header %}
+
+{% macro item_list(items) -%}
+<div class="posts">
+    {% for page in items | reverse %}
+      <div class="post">
+        {{ macros::note_header(item=page, item_link=true) }}
+      </div>
+    {% endfor %}
+</div>
+{%- endmacro item_list %}
